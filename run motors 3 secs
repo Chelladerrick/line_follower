@@ -1,0 +1,62 @@
+//Run motors forward for 3 seconds
+//Stop for 1 second
+//Run in reverse for 3 seconds
+//Stop again, then repeat
+
+// Speed control pins (PWM)
+const int enA = 9;   // For Motor A (Motors 1 & 2)
+const int enB = 10;  // For Motor B (Motors 3 & 4)
+
+// Direction control pins
+const int in1 = 6;
+const int in2 = 7;
+const int in3 = 8;
+const int in4 = 11;
+
+const int motorSpeed = 255;  // PWM 0–255
+
+void setup() {
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  // Apply PWM speed
+  analogWrite(enA, motorSpeed);
+  analogWrite(enB, motorSpeed);
+}
+
+void loop() {
+  // Run forward
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  delay(3000); // run forward for 3 seconds
+
+  // Stop briefly
+  stopMotors();
+  delay(1000);
+
+  // Run reverse
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  delay(10000); // run reverse for 3 seconds
+
+  // Stop briefly
+  stopMotors();
+  delay(1000);
+}
+
+void stopMotors() {
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+
