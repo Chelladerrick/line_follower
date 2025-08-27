@@ -1,0 +1,84 @@
+// Forward (1.5 sec) Both motors move forward → robot moves straight ahead.
+
+// Right Turn (1.3 sec) Motor A spins forward, Motor B spins backward → robot pivots clockwise ~90°.
+
+// Return to Start ; Forward again (1.5 sec) to move back along the original line; Left turn (1.3 sec) to reorient back to the starting angle.
+
+// Stop Motors are deactivated and loop() stays idle.
+
+
+
+
+
+
+// Speed control pins (PWM)
+const int enA = 9;
+const int enB = 10;
+
+// Direction control pins
+const int in1 = 6;
+const int in2 = 7;
+const int in3 = 8;
+const int in4 = 11;
+
+const int motorSpeed = 200;
+
+void setup() {
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  analogWrite(enA, motorSpeed);
+  analogWrite(enB, motorSpeed);
+
+  // 1. Move forward for 1.5 seconds
+  driveForward();
+  delay(1500);
+
+  // 2. Turn right for ~1.3 seconds
+  turnRight();
+  delay(1300);
+
+  // 3. Return to start: reverse forward movement and undo orientation
+  driveForward();
+  delay(1500);
+
+  turnLeft();
+  delay(1300);
+
+  // 4. Stop permanently
+  stopMotors();
+}
+
+void loop() {
+  // Do nothing
+}
+
+void driveForward() {
+  digitalWrite(in1, HIGH); digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH); digitalWrite(in4, LOW);
+}
+
+void driveBackward() {
+  digitalWrite(in1, LOW); digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW); digitalWrite(in4, HIGH);
+}
+
+void turnRight() {
+  // In-place clockwise turn
+  digitalWrite(in1, HIGH); digitalWrite(in2, LOW);   // A forward
+  digitalWrite(in3, LOW);  digitalWrite(in4, HIGH);  // B backward
+}
+
+void turnLeft() {
+  digitalWrite(in1, LOW);  digitalWrite(in2, HIGH);  // A backward
+  digitalWrite(in3, HIGH); digitalWrite(in4, LOW);   // B forward
+}
+
+void stopMotors() {
+  digitalWrite(in1, LOW); digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW); digitalWrite(in4, LOW);
+}
