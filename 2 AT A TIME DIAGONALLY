@@ -1,0 +1,59 @@
+// 2 AT A TIME
+
+
+
+
+// Speed control pins (PWM)
+const int enA = 9;
+const int enB = 10;
+
+// Direction control pins
+const int in1 = 6;
+const int in2 = 7;
+const int in3 = 8;
+const int in4 = 11;
+
+const int motorSpeed = 200;
+
+void setup() {
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  
+  // Phase 1: Motor A runs immediately for 3 seconds
+  analogWrite(enA, motorSpeed);
+  digitalWrite(in1, HIGH);  digitalWrite(in2, LOW);
+  stopMotorB();
+  delay(3000);
+  stopMotorA();
+
+  // Phase 2: Motor B runs for 3 seconds
+  analogWrite(enB, motorSpeed);
+  digitalWrite(in3, HIGH);  digitalWrite(in4, LOW);
+  delay(3000);
+  stopAllMotors();
+}
+
+void loop() {
+  // Nothing here—the sequence runs once
+}
+
+void stopMotorA() {
+  analogWrite(enA, 0);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+}
+
+void stopMotorB() {
+  analogWrite(enB, 0);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+void stopAllMotors() {
+  stopMotorA();
+  stopMotorB();
+}
