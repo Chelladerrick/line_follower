@@ -1,0 +1,47 @@
+void setup() {
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  // Example sequence:
+  // 1. Run Motor A for 3s
+  analogWrite(enA, motorSpeed);
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  stopAllMotorsCoast();
+  delay(3000);
+
+  // 2. Run Motor B for 3s
+  analogWrite(enB, motorSpeed);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  delay(3000);
+
+  // 3. Stop — choose coast or brake
+  stopAllMotorsBrake();
+}
+
+void loop() {
+  // Empty—sequence runs once
+}
+
+void stopAllMotorsCoast() {
+  analogWrite(enA, 0);
+  analogWrite(enB, 0);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+void stopAllMotorsBrake() {
+  analogWrite(enA, motorSpeed);
+  analogWrite(enB, motorSpeed);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
